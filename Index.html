@@ -131,130 +131,158 @@
   </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="#menu">Menu</a>
-      <a href="#promocje">Promocje</a>
-      <a href="#sklad">Skład</a>
-      <a href="#informacje">Informacje</a>
-      <a href="#rekrutacja">Szukamy pracownika</a>
-      <a href="#opinie">Opinie</a>
-    </nav>
-    <button id="login-toggle" onclick="toggleLogin()">Login</button>
-  </header>
+<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyAx2-MkaxMzJVWEtUyQMl9XhdrWorQpEoU",
+  authDomain: "zapis-stron.firebaseapp.com",
+  projectId: "zapis-stron",
+  storageBucket: "zapis-stron.firebasestorage.app",
+  messagingSenderId: "524271842932",
+  appId: "1:524271842932:web:3fda0d79be131987988321",
+  measurementId: "G-M0R5PMCSHB"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
+</script>
 
-  <section id="login-section">
-    <h3>Admin Login</h3>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Hasło">
-    <input type="submit" value="Zaloguj" onclick="login()">
-    <p id="login-status"></p>
-  </section>
+<header>
+  <nav>
+    <a href="#menu">Menu</a>
+    <a href="#promocje">Promocje</a>
+    <a href="#sklad">Skład</a>
+    <a href="#informacje">Informacje</a>
+    <a href="#rekrutacja">Szukamy pracownika</a>
+    <a href="#opinie">Opinie</a>
+  </nav>
+  <button id="login-toggle" onclick="toggleLogin()">Login</button>
+</header>
 
-  <section id="menu">
-    <h2 class="editable">Nasze Menu</h2>
-    <p class="editable">Tu pojawi się zdjęcie menu oraz krótki opis.</p>
-    <img src="menu.jpg" alt="Menu" style="max-width: 100%; height: auto;">
-  </section>
+<section id="login-section">
+  <h3>Admin Login</h3>
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Hasło">
+  <input type="submit" value="Zaloguj" onclick="login()">
+  <p id="login-status"></p>
+</section>
 
-  <section id="promocje">
-    <h2 class="editable">Promocje</h2>
-    <p class="editable">Sprawdź nasze aktualne promocje! Kolorowo i apetycznie!</p>
-  </section>
+<section id="menu">
+  <h2 class="editable">Nasze Menu</h2>
+  <p class="editable">Tu pojawi się zdjęcie menu oraz krótki opis.</p>
+  <img src="menu.jpg" alt="Menu" style="max-width: 100%; height: auto;">
+</section>
 
-  <section id="sklad">
-    <h2 class="editable">Nasz Skład</h2>
-    <div class="czlonek-skladu">
-      <img src="pracownik1.jpg" alt="Pracownik 1">
-      <p class="editable">Imię Nazwisko<br>Telefon: 123 456 789<br>Opis: Mistrz kuchni</p>
-    </div>
-  </section>
+<section id="promocje">
+  <h2 class="editable">Promocje</h2>
+  <p class="editable">Sprawdź nasze aktualne promocje! Kolorowo i apetycznie!</p>
+</section>
 
-  <section id="informacje">
-    <h2 class="editable">Informacje</h2>
-    <p class="editable">Tu znajdziesz wszelkie ważne informacje o naszej restauracji...</p>
-  </section>
+<section id="sklad">
+  <h2 class="editable">Nasz Skład</h2>
+  <div class="czlonek-skladu">
+    <img src="pracownik1.jpg" alt="Pracownik 1">
+    <p class="editable">Imię Nazwisko<br>Telefon: 123 456 789<br>Opis: Mistrz kuchni</p>
+  </div>
+</section>
 
-  <section id="rekrutacja">
-    <h2 class="editable">Szukamy Pracownika</h2>
-    <p class="editable"><strong>Wymagania:</strong> Doświadczenie, chęć do pracy, kultura osobista.</p>
-    <p class="editable"><strong>Oferujemy:</strong> Zajebista atmosfera, dobre zarobki, darmowy obiad.</p>
-    <p class="editable"><a href="#">Kliknij tutaj, aby złożyć podanie</a></p>
-  </section>
+<section id="informacje">
+  <h2 class="editable">Informacje</h2>
+  <p class="editable">Tu znajdziesz wszelkie ważne informacje o naszej restauracji...</p>
+</section>
 
-  <section id="opinie">
-    <h2>Opinie</h2>
-    <form id="opinia-form">
-      <label for="imienazwisko">Imię i Nazwisko:</label>
-      <input type="text" id="imienazwisko" required placeholder="Jan Kowalski">
-      <label for="opinia">Napisz swoją opinię:</label>
-      <textarea id="opinia" rows="4" placeholder="Twoja opinia..." required></textarea>
-      <input type="submit" value="Wyślij">
-    </form>
-    <div id="lista-opinii"></div>
-  </section>
+<section id="rekrutacja">
+  <h2 class="editable">Szukamy Pracownika</h2>
+  <p class="editable"><strong>Wymagania:</strong> Doświadczenie, chęć do pracy, kultura osobista.</p>
+  <p class="editable"><strong>Oferujemy:</strong> Zajebista atmosfera, dobre zarobki, darmowy obiad.</p>
+  <p class="editable"><a href="#">Kliknij tutaj, aby złożyć podanie</a></p>
+</section>
 
-  <script>
-    const ADMIN_EMAILS = ['restauracjapearls@gmail.com'];
-    const ADMIN_PASSWORD = 'megatrudnehasloxd';
+<section id="opinie">
+  <h2>Opinie</h2>
+  <form id="opinia-form">
+    <label for="imienazwisko">Imię i Nazwisko:</label>
+    <input type="text" id="imienazwisko" required placeholder="Jan Kowalski">
+    <label for="opinia">Napisz swoją opinię:</label>
+    <textarea id="opinia" rows="4" placeholder="Twoja opinia..." required></textarea>
+    <input type="submit" value="Wyślij">
+  </form>
+  <div id="lista-opinii"></div>
+</section>
 
-    function login() {
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-
-      if (ADMIN_EMAILS.includes(email) && password === ADMIN_PASSWORD) {
-        localStorage.setItem('isAdmin', 'true');
+<script>
+  function login() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
         document.getElementById('login-status').textContent = 'Zalogowano jako admin.';
         enableAdminFeatures();
-      } else {
-        document.getElementById('login-status').textContent = 'Nieprawidłowe dane logowania.';
-      }
+      })
+      .catch(error => {
+        document.getElementById('login-status').textContent = 'Błąd logowania: ' + error.message;
+      });
+  }
+
+  function toggleLogin() {
+    const loginBox = document.getElementById('login-section');
+    loginBox.style.display = loginBox.style.display === 'none' || loginBox.style.display === '' ? 'block' : 'none';
+  }
+
+  function enableAdminFeatures() {
+    document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block');
+    document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
+  }
+
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      enableAdminFeatures();
     }
+  });
 
-    function toggleLogin() {
-      const loginBox = document.getElementById('login-section');
-      loginBox.style.display = loginBox.style.display === 'none' || loginBox.style.display === '' ? 'block' : 'none';
-    }
+  document.getElementById("opinia-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const imienazwisko = document.getElementById("imienazwisko").value.trim();
+    const opinia = document.getElementById("opinia").value.trim();
+    if (!imienazwisko || !opinia) return;
 
-    function enableAdminFeatures() {
-      document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'block');
-      document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
-    }
+    const opiniaRef = db.ref("opinie").push();
+    opiniaRef.set({
+      imie: imienazwisko,
+      tresc: opinia,
+      czas: Date.now()
+    });
 
-    window.onload = () => {
-      if (localStorage.getItem('isAdmin') === 'true') {
-        enableAdminFeatures();
-      }
-    }
+    document.getElementById("imienazwisko").value = "";
+    document.getElementById("opinia").value = "";
+  });
 
-    document.getElementById("opinia-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const imienazwisko = document.getElementById("imienazwisko").value.trim();
-      const opinia = document.getElementById("opinia").value.trim();
-      if (!imienazwisko || !opinia) return;
-
+  db.ref("opinie").on("value", snapshot => {
+    const container = document.getElementById("lista-opinii");
+    container.innerHTML = "";
+    snapshot.forEach(child => {
+      const data = child.val();
       const div = document.createElement("div");
       div.className = "opinia-entry";
+      div.innerHTML = `<strong>${data.imie}</strong><br>${data.tresc}`;
+
       const btn = document.createElement("button");
       btn.textContent = "Usuń";
       btn.className = "delete-btn";
       btn.onclick = function() {
-        if (localStorage.getItem('isAdmin') === 'true') {
-          div.remove();
+        if (auth.currentUser) {
+          db.ref("opinie").child(child.key).remove();
         }
       };
 
-      div.innerHTML = `<strong>${imienazwisko}</strong><br>${opinia}`;
+      if (auth.currentUser) btn.style.display = 'block';
+
       div.appendChild(btn);
-      document.getElementById("lista-opinii").appendChild(div);
-
-      document.getElementById("imienazwisko").value = "";
-      document.getElementById("opinia").value = "";
-
-      if (localStorage.getItem('isAdmin') === 'true') {
-        btn.style.display = 'block';
-      }
+      container.appendChild(div);
     });
-  </script>
+  });
+</script>
 </body>
 </html>
